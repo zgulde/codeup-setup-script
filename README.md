@@ -1,3 +1,3 @@
 ```
-curl -sS https://raw.githubusercontent.com/zgulde/codeup-setup-script/master/install.sh | bash
+bash -c "$(curl -sS https://raw.githubusercontent.com/zgulde/codeup-setup-script/master/install.sh)"
 ```
