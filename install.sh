@@ -68,6 +68,33 @@ setup-ssh-keys(){
     wait-to-continue
 }
 
+install-mysql(){
+    echo 'We are now going to install and configure MySQL, the database managment system we will'
+    echo 'use for this course.'
+    wait-to-continue
+
+    brew install mysql
+
+    # copy and install the mysql config file
+
+    # kill any existing mysql processes
+    ps -ax | grep mysql | awk '{print $1}' | xargs -L 1 kill
+
+    # start the mysql server
+
+    # set a password for the root user, make sure no other users exist, and drop the test db
+    # password will be 'codeup'
+    mysql -u root <<-EOF
+UPDATE mysql.user SET Password=PASSWORD('codeup') WHERE User='root';
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+DELETE FROM mysql.user WHERE User='';
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';
+FLUSH PRIVILEGES;
+EOF
+
+
+}
+
 echo 'We are going to check if xcode and brew are installed, and if you have ssh keys setup.'
 echo 'During this process you may be asked for your password several times. This is the password'
 echo 'you use to log into your computer. When you type it in, you will not see any output in the'
