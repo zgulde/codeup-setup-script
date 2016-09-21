@@ -2,10 +2,17 @@
 
 # Setup script for codeup student's laptops
 
+# TODO: setup mysql
+# TODO: setup tomcat
+#   - both should be installable with brew.
+#   - brew has versions mysql 5.7, tomcat 8.5.5
+
 # 1. check for xcode, if it does not exist go ahead and install it
 # 2. do the same for brew
 # 3. if $HOME/.ssh/id_rsa does not exist, generate ssh keys and open github so
 #    it can be configured there
+
+
 
 wait-to-continue(){
     echo
@@ -25,6 +32,8 @@ install-xcode(){
     while sleep 1; do
         xcode-select --print-path >/dev/null 2>&1 && break
     done
+
+    echo
 }
 
 install-brew(){
@@ -54,13 +63,15 @@ setup-ssh-keys(){
     echo "to the GitHub website where you will add it as one of your keys by clicking the"
     echo "\"Add SSH key\" button and pasting the contents in there."
 
+    wait-to-continue
     open https://github.com/settings/ssh
-
     wait-to-continue
 }
 
 echo 'We are going to check if xcode and brew are installed, and if you have ssh keys setup.'
-echo "If you don't see any output, then everything is good to go!"
+echo 'During this process you may be asked for your password several times. This is the password'
+echo 'you use to log into your computer. When you type it in, you will not see any output in the'
+echo 'terminal, this is normal.'
 wait-to-continue
 
 xcode-select --print-path >/dev/null 2>&1 || install-xcode
