@@ -7,12 +7,12 @@
 #   - both should be installable with brew.
 #   - brew has versions mysql 5.7, tomcat 8.5.5
 
+# Overview
+# ========
 # 1. check for xcode, if it does not exist go ahead and install it
 # 2. do the same for brew
 # 3. if $HOME/.ssh/id_rsa does not exist, generate ssh keys and open github so
 #    it can be configured there
-
-
 
 wait-to-continue(){
     echo
@@ -75,12 +75,11 @@ install-mysql(){
 
     brew install mysql
 
-    # copy and install the mysql config file
-
     # kill any existing mysql processes
     ps -ax | grep mysql | awk '{print $1}' | xargs -L 1 kill
 
     # start the mysql server
+    mysql.server start
 
     # set a password for the root user, make sure no other users exist, and drop the test db
     # password will be 'codeup'
@@ -92,7 +91,6 @@ DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';
 FLUSH PRIVILEGES;
 EOF
 
-
 }
 
 echo 'We are going to check if xcode and brew are installed, and if you have ssh keys setup.'
@@ -101,10 +99,10 @@ echo 'you use to log into your computer. When you type it in, you will not see a
 echo 'terminal, this is normal.'
 wait-to-continue
 
+# check for xcode, brew, and ssh keys and run the relevant installer functions
+# if they do not exist
 xcode-select --print-path >/dev/null 2>&1 || install-xcode
-
 which brew >/dev/null 2>&1 || install-brew
-
 [ -d $HOME/.ssh ] && [ -f $HOME/.ssh/id_rsa ] || setup-ssh-keys
 
 echo "Ok! We've gotten everything setup and you should be ready to go!"
