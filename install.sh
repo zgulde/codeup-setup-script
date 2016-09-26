@@ -61,7 +61,10 @@ setup-ssh-keys(){
 
     echo "We've copied your ssh key to the clipboard for you. Now, we are going to take you"
     echo "to the GitHub website where you will add it as one of your keys by clicking the"
-    echo "\"Add SSH key\" button and pasting the contents in there."
+    echo '"New SSH key" button, giving the key a title (for example: Macbook-Pro), and'
+    echo 'pasting the key into the "key" textarea.'
+    echo 'Once you have done all of the above, click the big green "Add SSH key" button'
+    echo 'then come back here.'
 
     wait-to-continue
     open https://github.com/settings/ssh
