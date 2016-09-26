@@ -68,6 +68,8 @@ setup-ssh-keys(){
     wait-to-continue
 }
 
+# Note this function is not currently being used, as time goes on, we will use
+# this script to install and setup mysql as well
 install-mysql(){
     echo 'We are now going to install and configure MySQL, the database managment system we will'
     echo 'use for this course.'
@@ -84,7 +86,7 @@ install-mysql(){
     # set a password for the root user, make sure no other users exist, and drop the test db
     # password will be 'codeup'
     mysql -u root <<-EOF
-UPDATE mysql.user SET Password=PASSWORD('codeup') WHERE User='root';
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('codeup');
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
 DELETE FROM mysql.user WHERE User='';
 DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';
