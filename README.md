@@ -11,3 +11,11 @@ bash -c "$(curl -sS https://raw.githubusercontent.com/zgulde/codeup-setup-script
 If students already have and `id_rsa` ssh key generated the script will *not* try to
 generate a new ones, and you will need to walk them through the process of adding
 their existing key to Github.
+
+The following should do the trick if they have a ssh key pair, but it's not
+wired up to Github.
+
+```bash
+pbcopy < ~/.ssh/id_rsa.pub
+open https://github.com/settings/ssh
+```
