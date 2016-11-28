@@ -12,8 +12,8 @@ If students already have and `id_rsa` ssh key generated the script will *not* tr
 generate a new ones, and you will need to walk them through the process of adding
 their existing key to Github.
 
-The following should do the trick if they have a ssh key pair, but it's not
-wired up to Github.
+The following should do the trick if they already have a ssh key pair, but it's
+not wired up to Github.
 
 ```bash
 pbcopy < ~/.ssh/id_rsa.pub

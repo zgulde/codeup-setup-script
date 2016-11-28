@@ -1,18 +1,17 @@
 #!/bin/bash
 
 # Setup script for codeup student's laptops
-
-# TODO: setup mysql
-# TODO: setup tomcat
-#   - both should be installable with brew.
-#   - brew has versions mysql 5.7, tomcat 8.5.5
-
-# Overview
-# ========
+# =========================================
+#
+# This script will
+#
 # 1. check for xcode, if it does not exist go ahead and install it
 # 2. do the same for brew
 # 3. if $HOME/.ssh/id_rsa does not exist, generate ssh keys and open github so
-#    it can be configured there
+#    they can be configured there
+# 4. install java with brew cask
+# 5. check for maven and tomcat, install them with brew if not present
+# 6. check for mysql, install it and configure if not present
 
 wait-to-continue(){
     echo
@@ -34,6 +33,26 @@ install-xcode(){
     done
 
     echo
+}
+
+install-java(){
+    echo 'We are now going to use homebrew to install java. While your mac comes'
+    echo 'with a version of java, it may not be the most recent version, and we want'
+    echo 'everyone to be on the same version.'
+    wait-to-continue
+    brew cask install java
+}
+
+install-tomcat(){
+    echo 'We are now going to install tomcat, the java web server we will use for this course'
+    wait-to-continue
+    brew install tomcat
+}
+
+install-maven(){
+    echo 'We will now install maven, a build tool and dependency manager for java'
+    wait-to-continue
+    brew install maven
 }
 
 install-brew(){
@@ -76,6 +95,8 @@ setup-ssh-keys(){
 install-mysql(){
     echo 'We are now going to install and configure MySQL, the database managment system we will'
     echo 'use for this course.'
+    echo 'We will lock down your local MySQL install so that only you can only access it'
+    echo 'from this computer'
     wait-to-continue
 
     brew install mysql
@@ -95,10 +116,19 @@ DELETE FROM mysql.user WHERE User='';
 DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';
 FLUSH PRIVILEGES;
 EOF
-
 }
 
 echo 'We are going to check if xcode and brew are installed, and if you have ssh keys setup.'
+echo 'We will then setup our java development environment, including installing MySQL.'
+echo ''
+echo 'All together we will be installing: '
+echo '  - xcode tools   - brew'
+echo '  - java          - maven'
+echo '  - tomcat        - mysql'
+echo '*Note*: if you have already setup any of the above on your computer, this script will _not_'
+echo '        attempt to reinstall them, please talk to an instructor to ensure everything'
+echo '        is configured properly'
+echo ''
 echo 'During this process you may be asked for your password several times. This is the password'
 echo 'you use to log into your computer. When you type it in, you will not see any output in the'
 echo 'terminal, this is normal.'
@@ -109,6 +139,13 @@ wait-to-continue
 xcode-select --print-path >/dev/null 2>&1 || install-xcode
 which brew >/dev/null 2>&1 || install-brew
 [ -d $HOME/.ssh ] && [ -f $HOME/.ssh/id_rsa ] || setup-ssh-keys
+
+# check if java was installed with brew cask if not install it
+brew cask list java >/dev/null 2>&1 || install-java
+# check for tomcat, maven, and mysql
+which mvn >/dev/null || install-maven
+which catalina >/dev/null || install-tomcat
+which mysql >/dev/null || install-mysql
 
 echo "Ok! We've gotten everything setup and you should be ready to go!"
 echo "Good luck in class!"
