@@ -1,5 +1,21 @@
 # Codeup Setup Script
 
+Setup script for Codeup students' laptops to install the all the tools we will
+need for the java course. We will install the following:
+
+- [xcode](https://developer.apple.com/xcode/features/): command line tools for
+  macs
+- [brew](http://brew.sh/): package manager for macs
+- [java](https://en.wikipedia.org/wiki/Java_(programming_language))
+- [tomcat](http://tomcat.apache.org/): the java webserver
+- [maven](https://maven.apache.org/): a java dependency and build management tool
+- [mysql](https://www.mysql.com/): the database
+
+In addition, we will setup ssh keys for the student's laptop and guide them
+through the process of linking their ssh key to their Github account.
+
+## For Students
+
 Copy and paste the following in your terminal:
 
 ```
