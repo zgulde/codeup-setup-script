@@ -10,6 +10,8 @@ need for the java course. We will install the following:
 - [tomcat](http://tomcat.apache.org/): the java webserver
 - [maven](https://maven.apache.org/): a java dependency and build management tool
 - [mysql](https://www.mysql.com/): the database
+- [node js](https://nodejs.org/en/): a JavaScript runtime outside of the browser
+- [npm](https://www.npmjs.com/): a package manager for JavaScript
 
 In addition, we will setup ssh keys for the student's laptop and guide them
 through the process of linking their ssh key to their Github account.
