@@ -13,6 +13,7 @@
 # 5. check for maven and tomcat, install them with brew if not present
 # 6. check for mysql, install it and configure if not present
 # 7. install node with brew
+# 8. setup a global gitignore file
 
 wait-to-continue(){
     echo
@@ -83,11 +84,11 @@ setup-ssh-keys(){
     echo "to the GitHub website where you will add it as one of your keys by clicking the"
     echo '"New SSH key" button, giving the key a title (for example: Macbook-Pro), and'
     echo 'pasting the key into the "key" textarea.'
-    echo 'Once you have done all of the above, click the big green "Add SSH key" button'
-    echo 'then come back here.'
-
     wait-to-continue
     open https://github.com/settings/ssh
+
+    echo 'Once you have done all of the above, click the big green "Add SSH key" button'
+    echo 'then come back here.'
     wait-to-continue
 }
 
@@ -120,46 +121,69 @@ install-node() {
 	brew install node
 }
 
-echo 'We are going to check if xcode and brew are installed, and if you have ssh keys setup.'
-echo 'We will then setup our java development environment, including installing MySQL.'
-echo ''
-echo 'All together we will be installing: '
-echo '  - xcode tools   - brew'
-echo '  - java          - maven'
-echo '  - tomcat        - mysql'
-echo '  - node'
-echo '*Note*: if you have already setup any of the above on your computer, this script will _not_'
-echo '        attempt to reinstall them, please talk to an instructor to ensure everything'
-echo '        is configured properly'
-echo ''
-echo 'During this process you may be asked for your password several times. This is the password'
-echo 'you use to log into your computer. When you type it in, you will not see any output in the'
-echo 'terminal, this is normal.'
-wait-to-continue
+setup() {
+	echo 'We are going to check if xcode and brew are installed, and if you have ssh keys setup.'
+	echo 'We will then setup our java development environment, including installing MySQL,'
+	echo 'and a mild bit of git configuration.'
+	echo ''
+	echo 'All together we will be installing: '
+	echo '  - xcode tools   - brew'
+	echo '  - java		  - maven'
+	echo '  - tomcat		- mysql'
+	echo '  - node'
+	echo '*Note*: if you have already setup any of the above on your computer, this script will _not_'
+	echo '		attempt to reinstall them, please talk to an instructor to ensure everything'
+	echo '		is configured properly'
+	echo ''
+	echo 'During this process you may be asked for your password several times. This is the password'
+	echo 'you use to log into your computer. When you type it in, you will not see any output in the'
+	echo 'terminal, this is normal.'
+	wait-to-continue
 
-# check for xcode, brew, and ssh keys and run the relevant installer functions
-# if they do not exist
-xcode-select --print-path >/dev/null 2>&1 || install-xcode
-which brew >/dev/null 2>&1 || install-brew
-[ -d $HOME/.ssh ] && [ -f $HOME/.ssh/id_rsa ] || setup-ssh-keys
+	# check for xcode, brew, and ssh keys and run the relevant installer functions
+	# if they do not exist
+	xcode-select --print-path >/dev/null 2>&1 || install-xcode
+	which brew >/dev/null 2>&1 || install-brew
+	[ -d $HOME/.ssh ] && [ -f $HOME/.ssh/id_rsa ] || setup-ssh-keys
 
-# check if java was installed with brew cask if not install it
-brew cask list java >/dev/null 2>&1 || install-java
-# check for tomcat, maven, and mysql
-which mvn >/dev/null || install-maven
-which catalina >/dev/null || install-tomcat
-which mysql >/dev/null || install-mysql
-# and lastly, node
-which node >/dev/null || install-node
+	# check if java was installed with brew cask if not install it
+	brew cask list java >/dev/null 2>&1 || install-java
+	# check for tomcat, maven, and mysql
+	which mvn >/dev/null || install-maven
+	which catalina >/dev/null || install-tomcat
+	which mysql >/dev/null || install-mysql
+	# and lastly, node
+	which node >/dev/null || install-node
 
-echo "Ok! We've gotten everything setup and you should be ready to go!"
-echo "Good luck in class!"
-echo
-echo "     _____         _____           _                  _ "
-echo "    |  __ \\       /  __ \\         | |                | |"
-echo "    | |  \\/ ___   | /  \\/ ___   __| | ___ _   _ _ __ | |"
-echo "    | | __ / _ \\  | |    / _ \\ / _  |/ _ \\ | | | '_ \\| |"
-echo "    | |_\\ \\ (_) | | \\__/\\ (_) | (_| |  __/ |_| | |_) |_|"
-echo "     \\____/\\___/   \\____/\\___/ \\__,_|\\___|\\__,_| .__/(_)"
-echo "                                               | |      "
-echo "                                               |_|      "
+	# setup the global gitignore file
+	if git config --global -l | grep core.excludesfile >/dev/null ; then
+		echo 'It looks like you already have a global gitignore file setup (core.excludesfile).'
+		echo 'We will not modify it, but make sure you have the following values in it:'
+		echo
+		echo '	.DS_Store'
+		echo '	.idea'
+		echo '	*.iml'
+		echo
+	else
+		echo 'Setting up global gitignore file...'
+		echo '.DS_Store' >> ~/.gitignore_global
+		echo '.idea' >> ~/.gitignore_global
+		echo '*.iml' >> ~/.gitignore_global
+		git config --global core.excludesfile ~/.gitignore_global
+	fi
+
+	echo "Ok! We've gotten everything setup and you should be ready to go!"
+	echo "Good luck in class!"
+	echo
+	echo "	 _____		 _____		   _				  _ "
+	echo "	|  __ \\	   /  __ \\		 | |				| |"
+	echo "	| |  \\/ ___   | /  \\/ ___   __| | ___ _   _ _ __ | |"
+	echo "	| | __ / _ \\  | |	/ _ \\ / _  |/ _ \\ | | | '_ \\| |"
+	echo "	| |_\\ \\ (_) | | \\__/\\ (_) | (_| |  __/ |_| | |_) |_|"
+	echo "	 \\____/\\___/   \\____/\\___/ \\__,_|\\___|\\__,_| .__/(_)"
+	echo "											   | |	  "
+	echo "											   |_|	  "
+}
+
+# delay script execution until the entire file is transferred
+setup
