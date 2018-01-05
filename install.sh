@@ -173,6 +173,14 @@ setup() {
 		echo '*.iml' >> ~/.gitignore_global
 		git config --global core.excludesfile ~/.gitignore_global
 	fi
+	# set the default git editor to nano
+	if git config --global core.editor >/dev/null ; then
+		echo 'It looks like you already have a preferred editor setup for git'
+		echo 'We will not modify this.'
+	else
+		echo 'Setting default git editor to nano...'
+		git config --global core.editor nano
+	fi
 
 	echo "Ok! We've gotten everything setup and you should be ready to go!"
 	echo "Good luck in class!"
