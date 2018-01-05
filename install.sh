@@ -18,7 +18,7 @@
 wait-to-continue(){
     echo
     echo 'Press Enter to continue or Ctrl-C to exit'
-    read
+    read -r
 }
 
 install-xcode(){
@@ -74,13 +74,13 @@ setup-ssh-keys(){
     echo "used to keep track of different keys on different servers. The comment"
     echo "will be formatted as [your name]@codeup."
 
-    while [ -z $NAME ]; do
-        read -p 'Enter your name: ' NAME
+    while [ -z "$NAME" ]; do
+        read -rp 'Enter your name: ' NAME
     done
 
-    ssh-keygen -trsa -b2048 -C "$NAME@codeup" -f $HOME/.ssh/id_rsa -N ''
+    ssh-keygen -trsa -b2048 -C "$NAME@codeup" -f "$HOME/.ssh/id_rsa" -N ''
 
-    pbcopy < $HOME/.ssh/id_rsa.pub
+    pbcopy < "$HOME/.ssh/id_rsa.pub"
 
     echo "We've copied your ssh key to the clipboard for you. Now, we are going to take you"
     echo "to the GitHub website where you will add it as one of your keys by clicking the"
@@ -112,7 +112,7 @@ install-mysql(){
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('codeup');
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
 DELETE FROM mysql.user WHERE User='';
-DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
 FLUSH PRIVILEGES;
 EOF
 }
@@ -146,7 +146,7 @@ setup() {
 	# if they do not exist
 	xcode-select --print-path >/dev/null 2>&1 || install-xcode
 	which brew >/dev/null 2>&1 || install-brew
-	[ -d $HOME/.ssh ] && [ -f $HOME/.ssh/id_rsa ] || setup-ssh-keys
+	[ -f "$HOME/.ssh/id_rsa" ] || setup-ssh-keys
 
 	# check if java was installed with brew cask if not install it
 	brew cask list java >/dev/null 2>&1 || install-java
@@ -168,9 +168,11 @@ setup() {
 		echo
 	else
 		echo 'Setting up global gitignore file...'
-		echo '.DS_Store' >> ~/.gitignore_global
-		echo '.idea' >> ~/.gitignore_global
-		echo '*.iml' >> ~/.gitignore_global
+		{
+			echo '.DS_Store'
+			echo '.idea'
+			echo '*.iml'
+		} >> ~/.gitignore_global
 		git config --global core.excludesfile ~/.gitignore_global
 	fi
 	# set the default git editor to nano
