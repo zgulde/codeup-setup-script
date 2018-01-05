@@ -13,7 +13,7 @@
 # 5. check for maven and tomcat, install them with brew if not present
 # 6. check for mysql, install it and configure if not present
 # 7. install node with brew
-# 8. setup a global gitignore file
+# 8. setup a global gitignore file and set the default commit editor to nano
 
 wait-to-continue(){
     echo
