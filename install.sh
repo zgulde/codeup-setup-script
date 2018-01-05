@@ -40,9 +40,11 @@ install-xcode(){
 install-java(){
     echo 'We are now going to use homebrew to install java. While your mac comes'
     echo 'with a version of java, it may not be the most recent version, and we want'
-    echo 'everyone to be on the same version.'
+    echo 'to make sure everyone is on the version.'
     wait-to-continue
-    brew cask install java
+	brew tap caskroom/versions
+	# we need 1.8 for spring boot, see https://github.com/spring-projects/spring-boot/issues/10646#issuecomment-336789642
+    brew cask install java8 java
 }
 
 install-tomcat(){
