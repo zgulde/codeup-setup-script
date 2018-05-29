@@ -40,7 +40,7 @@ install-xcode(){
 install-java(){
     echo 'We are now going to use homebrew to install java. While your mac comes'
     echo 'with a version of java, it may not be the most recent version, and we want'
-    echo 'to make sure everyone is on the version.'
+    echo 'to make sure everyone is on the same version.'
     wait-to-continue
 	brew tap caskroom/versions
 	# we need 1.8 for spring boot, see https://github.com/spring-projects/spring-boot/issues/10646#issuecomment-336789642
@@ -130,12 +130,12 @@ setup() {
 	echo ''
 	echo 'All together we will be installing: '
 	echo '  - xcode tools   - brew'
-	echo '  - java		  - maven'
-	echo '  - tomcat		- mysql'
+	echo '  - java          - maven'
+	echo '  - tomcat        - mysql'
 	echo '  - node'
 	echo '*Note*: if you have already setup any of the above on your computer, this script will _not_'
-	echo '		attempt to reinstall them, please talk to an instructor to ensure everything'
-	echo '		is configured properly'
+	echo '        attempt to reinstall them, please talk to an instructor to ensure everything'
+	echo '        is configured properly'
 	echo ''
 	echo 'During this process you may be asked for your password several times. This is the password'
 	echo 'you use to log into your computer. When you type it in, you will not see any output in the'
@@ -187,14 +187,14 @@ setup() {
 	echo "Ok! We've gotten everything setup and you should be ready to go!"
 	echo "Good luck in class!"
 	echo
-	echo "	 _____		 _____		   _				  _ "
-	echo "	|  __ \\	   /  __ \\		 | |				| |"
-	echo "	| |  \\/ ___   | /  \\/ ___   __| | ___ _   _ _ __ | |"
-	echo "	| | __ / _ \\  | |	/ _ \\ / _  |/ _ \\ | | | '_ \\| |"
-	echo "	| |_\\ \\ (_) | | \\__/\\ (_) | (_| |  __/ |_| | |_) |_|"
-	echo "	 \\____/\\___/   \\____/\\___/ \\__,_|\\___|\\__,_| .__/(_)"
-	echo "											   | |	  "
-	echo "											   |_|	  "
+	echo "     _____         _____           _                  _ "
+	echo "    |  __ \\       /  __ \\         | |                | |"
+	echo "    | |  \\/ ___   | /  \\/ ___   __| | ___ _   _ _ __ | |"
+	echo "    | | __ / _ \\  | |    / _ \\ / _  |/ _ \\ | | | '_ \\| |"
+	echo "    | |_\\ \\ (_) | | \\__/\\ (_) | (_| |  __/ |_| | |_) |_|"
+	echo "     \\____/\\___/   \\____/\\___/ \\__,_|\\___|\\__,_| .__/(_)"
+	echo "                                               | |      "
+	echo "                                               |_|      "
 }
 
 # delay script execution until the entire file is transferred
