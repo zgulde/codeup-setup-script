@@ -78,7 +78,7 @@ setup-ssh-keys(){
         read -rp 'Enter your name: ' NAME
     done
 
-    ssh-keygen -trsa -b2048 -C "$NAME@codeup" -f "$HOME/.ssh/id_rsa" -N ''
+    ssh-keygen -trsa -b4096 -C "$NAME@codeup" -f "$HOME/.ssh/id_rsa" -N ''
 
     pbcopy < "$HOME/.ssh/id_rsa.pub"
 
