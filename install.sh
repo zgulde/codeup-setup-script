@@ -101,7 +101,7 @@ install-mysql(){
     echo 'from this computer'
     wait-to-continue
 
-    brew install mysql
+    brew install mysql@5.7
 
     # start the mysql server
     mysql.server start
