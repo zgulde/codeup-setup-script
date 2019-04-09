@@ -103,6 +103,8 @@ install-mysql(){
 
     brew install mysql@5.7
 
+    brew link mysql@5.7 --force
+
     # start the mysql server
     mysql.server start
 
