@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: brew cask install intellij-idea, google-chrome
+
 # Setup script for codeup student's laptops
 # =========================================
 #
@@ -42,9 +44,8 @@ install-java(){
     echo 'with a version of java, it may not be the most recent version, and we want'
     echo 'to make sure everyone is on the same version.'
     wait-to-continue
-	brew tap caskroom/versions
-	# we need 1.8 for spring boot, see https://github.com/spring-projects/spring-boot/issues/10646#issuecomment-336789642
-    brew cask install java8 java
+	brew tap AdoptOpenJDK/openjdk
+	brew cask install adoptopenjdk8 adoptopenjdk11
 }
 
 install-tomcat(){
