@@ -96,26 +96,26 @@ setup-ssh-keys(){
 
 install-mysql(){
     echo 'We are now going to install and configure MySQL, the database managment system we will'
-    echo 'use for this course.'
-    echo 'We will lock down your local MySQL install so that only you can only access it'
-    echo 'from this computer'
-    wait-to-continue
+        echo 'use for this course.'
+        echo 'We will lock down your local MySQL install so that only you can only access it'
+        echo 'from this computer'
+        wait-to-continue
 
-    brew install mysql@5.7
+        brew install mysql
 
-    brew link mysql@5.7 --force
+        brew link mysql --force
 
-    # start the mysql server
-    mysql.server start
+        # start the mysql server
+        mysql.server start
 
-    # set a password for the root user, make sure no other users exist, and drop
-    # the test db. Set the root password to 'codeup'
-    mysql -u root <<-EOF
-SET PASSWORD FOR 'root'@'localhost' = PASSWORD('codeup');
-DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
-DELETE FROM mysql.user WHERE User='';
-DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
-FLUSH PRIVILEGES;
+        # set a password for the root user, make sure no other users exist, and drop
+        # the test db. Set the root password to 'codeup'
+        mysql -u root <<-EOF
+    SET PASSWORD FOR 'root'@'localhost' = 'codeup';
+    DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+    DELETE FROM mysql.user WHERE User='';
+    DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+    FLUSH PRIVILEGES;
 EOF
 }
 
