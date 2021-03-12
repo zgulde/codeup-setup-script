@@ -126,6 +126,11 @@ install-node() {
 	brew install node
 }
 
+install-intellij(){
+  echo 'We are now going to install intelliJ, Java IDE.'
+  brew install --cask intellij-idea
+}
+
 setup() {
 	echo 'We are going to check if xcode and brew are installed, and if you have ssh keys setup.'
 	echo 'We will then setup our java development environment, including installing MySQL,'
@@ -135,7 +140,7 @@ setup() {
 	echo '  - xcode tools   - brew'
 	echo '  - java          - maven'
 	echo '  - tomcat        - mysql'
-	echo '  - node'
+	echo '  - node          - intellij'
 	echo '*Note*: if you have already setup any of the above on your computer, this script will _not_'
 	echo '        attempt to reinstall them, please talk to an instructor to ensure everything'
 	echo '        is configured properly'
@@ -157,6 +162,7 @@ setup() {
 	which mvn >/dev/null || install-maven
 	which catalina >/dev/null || install-tomcat
 	which mysql >/dev/null || install-mysql
+	which intellij >/dev/null || install-intellij
 	# and lastly, node
 	which node >/dev/null || install-node
 
