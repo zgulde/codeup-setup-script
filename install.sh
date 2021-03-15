@@ -51,7 +51,7 @@ install-java(){
 install-tomcat(){
     echo 'We are now going to install tomcat, the java web server we will use for this course'
     wait-to-continue
-    brew install tomcat
+    brew install tomcat@9
 }
 
 install-maven(){
