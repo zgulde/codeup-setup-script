@@ -193,6 +193,23 @@ setup() {
 		git config --global core.editor nano
 	fi
 
+	echo "Please enter your name"
+	echo "Example: Casey Edwards"
+	read -p $'Enter your name: ' USERSNAME
+
+	read -p $'Enter the your github email: ' GITHUBEMAIL
+
+  	while [[ ! ($GITHUBEMAIL =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$) ]];
+    	do
+			echo "Invalid email"
+			echo "Please check and re-enter your email when prompted"
+			read -p $'Enter the your github email: ' GITHUBEMAIL
+	done
+
+	git config --global user.name "$USERSNAME"
+ 	git config --global user.email $GITHUBEMAIL
+
+
 	echo "Ok! We've gotten everything setup and you should be ready to go!"
 	echo "Good luck in class!"
 	echo
@@ -205,6 +222,8 @@ setup() {
 	echo "                                               | |      "
 	echo "                                               |_|      "
 }
+
+
 
 # delay script execution until the entire file is transferred
 setup
