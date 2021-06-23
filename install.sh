@@ -42,10 +42,10 @@ install-xcode(){
 install-java(){
     echo 'We are now going to use homebrew to install java. While your mac comes'
     echo 'with a version of java, it may not be the most recent version, and we want'
-    echo 'to make sure everyone is on the same version.'
+    echo 'to make sure everyone is on version 11.'
     wait-to-continue
-	brew tap AdoptOpenJDK/openjdk
-	brew cask install adoptopenjdk8 adoptopenjdk11
+	brew install openjdk@11
+
 }
 
 install-tomcat(){
@@ -63,7 +63,7 @@ install-maven(){
 install-brew(){
     echo 'We are now going to install homebrew, a package manager for OSX.'
     wait-to-continue
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
 
 setup-ssh-keys(){
@@ -89,35 +89,31 @@ setup-ssh-keys(){
     echo 'pasting the key into the "key" textarea.'
     wait-to-continue
     open https://github.com/settings/ssh
-
-    echo 'Once you have done all of the above, click the big green "Add SSH key" button'
+	echo 'Once you have done all of the above, click the big green "Add SSH key" button'
     echo 'then come back here.'
     wait-to-continue
 }
 
 install-mysql(){
     echo 'We are now going to install and configure MySQL, the database managment system we will'
-        echo 'use for this course.'
-        echo 'We will lock down your local MySQL install so that only you can only access it'
-        echo 'from this computer'
-        wait-to-continue
-
-        brew install mysql
-
-        brew link mysql --force
-
-        # start the mysql server
-        mysql.server start
-
-        # set a password for the root user, make sure no other users exist, and drop
-        # the test db. Set the root password to 'codeup'
-        mysql -u root <<-EOF
+    echo 'use for this course.'
+    echo 'We will lock down your local MySQL install so that only you can only access it'
+    echo 'from this computer'
+    wait-to-continue
+	brew install mysql
+	brew link mysql --force
+	# start the mysql server
+    mysql.server start
+	# set a password for the root user, make sure no other users exist, and drop
+    # the test db. Set the root password to 'codeup'
+	mysql -u root <<-EOF
     SET PASSWORD FOR 'root'@'localhost' = 'codeup';
     DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
     DELETE FROM mysql.user WHERE User='';
     DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
     FLUSH PRIVILEGES;
-EOF
+	EOF
+	mysql.server stop
 }
 
 install-node() {
